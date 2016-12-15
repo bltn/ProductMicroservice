@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface ProductDAO extends CrudRepository<Product, Integer> {
 	public <S extends Product> S save(Product product);
 	public List<Product> findAll();
+	public Product findByProductID(Integer productID);
 }

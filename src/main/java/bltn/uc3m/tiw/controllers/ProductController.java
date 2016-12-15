@@ -40,6 +40,17 @@ public class ProductController {
 		}
 	}
 	
+	@RequestMapping("/products/{id}")
+	public Product getProduct(@PathVariable("id") Integer id) {
+		try {
+			Product product = productDao.findByProductID(id);
+			return product;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
 	private Product createProductFromParams(Map<String, String[]> formParams) {
 		// Extract values from params 
 		String title = formParams.get("title")[0];
