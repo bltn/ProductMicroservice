@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.validation.constraints.Size;
 
+import bltn.uc3m.tiw.domains.Product.Availability;
+import bltn.uc3m.tiw.domains.Product.Category;
+
 @Entity
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -105,6 +108,10 @@ public class Product implements Serializable {
 	public void setAvailability(Availability availability) {
 		this.availability = availability;
 	}
+	
+	public void setAvailabilityFromString(String availability) {
+		this.availability = stringToAvailability(availability);
+	}
 
 	public void setUserID(int userID) {
 		this.userID = userID;
@@ -114,11 +121,39 @@ public class Product implements Serializable {
 		this.category = category;
 	}
 	
+	public void setCategoryFromString(String category) {
+		this.category = stringToCategory(category);
+	}
+	
 	public static enum Category {
 		BEDROOM, KITCHEN, OFFICE, BATHROOM, OTHER;
 	}
 	
 	public static enum Availability {
 		AVAILABLE, RESERVED, SOLD;
+	}
+	
+	private Category stringToCategory(String cat) {
+		if (cat.equalsIgnoreCase("bedroom")) {
+			return Category.BEDROOM;
+		} else if (cat.equalsIgnoreCase("kitchen")) {
+			return Category.KITCHEN;
+		} else if (cat.equalsIgnoreCase("office")) {
+			return Category.OFFICE;
+		} else if (cat.equalsIgnoreCase("bathroom")) {
+			return Category.BATHROOM;
+		} else {
+			return Category.OTHER;
+		}
+	}
+	
+	private Availability stringToAvailability(String avail) {
+		if (avail.equalsIgnoreCase("reserved")) {
+			return Availability.RESERVED;
+		} else if (avail.equals("sold")) {
+			return Availability.SOLD;
+		} else {
+			return Availability.AVAILABLE;
+		}
 	}
 }

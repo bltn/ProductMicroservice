@@ -26,6 +26,19 @@ public class ProductController {
 		return products;
 	}
 	
+	@RequestMapping("/products/{id}/edit")
+	public Product editProduct(@PathVariable("id") Integer id, @RequestBody Map<String, String[]> formParams) {
+		try {
+			Product product = productDao.findByProductID(id);
+			Product editedProduct = editProductWithParams(formParams, product);
+			Product savedProduct = productDao.save(editedProduct);
+			return savedProduct;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
 	@RequestMapping("/products/{id}/delete")
 	public boolean deleteProduct(@PathVariable("id") Integer id) {
 		try {
@@ -72,6 +85,23 @@ public class ProductController {
 		Product initialisedProduct = new Product(title, description, category, null, 
 					price, null);
 		return initialisedProduct;
+	}
+	
+	private Product editProductWithParams(Map<String, String[]> formParams, Product product) {
+		// Extract values from params 
+		String title = formParams.get("title")[0];
+		String description = formParams.get("description")[0];
+		String category = formParams.get("category")[0];
+		String availability = formParams.get("availability")[0];
+		Integer price = Integer.valueOf(formParams.get("price")[0]);
+
+		product.setTitle(title);
+		product.setDescription(description);
+		product.setCategoryFromString(category);
+		product.setAvailabilityFromString(availability);
+		product.setPrice(price);
+
+		return product;
 	}
 
 }
