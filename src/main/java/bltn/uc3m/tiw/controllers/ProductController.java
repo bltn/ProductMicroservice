@@ -26,6 +26,17 @@ public class ProductController {
 		return products;
 	}
 	
+	@RequestMapping("/products/{id}/delete")
+	public boolean deleteProduct(@PathVariable("id") Integer id) {
+		try {
+			productDao.delete(id);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+	
 	@RequestMapping("/{id}/products/new")
 	public Product newProduct(@RequestBody Map<String, String[]> formParams, @PathVariable("id") Integer id) {
 		Product product = createProductFromParams(formParams);
