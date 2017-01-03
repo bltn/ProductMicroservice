@@ -30,8 +30,6 @@ public class Product implements Serializable {
 	private String description;
 	@Enumerated(EnumType.STRING)
 	private Category category;
-	@Lob
-	private byte[] photo;
 	private Integer price;
 	@Enumerated(EnumType.STRING)
 	private Availability availability; 
@@ -47,7 +45,6 @@ public class Product implements Serializable {
 		this.title = title;
 		this.description = description;
 		this.category = Category.valueOf(category);
-		this.photo = photo;
 		this.price = price;
 		this.availability = Availability.AVAILABLE;
 		this.userID = userID;
@@ -63,10 +60,6 @@ public class Product implements Serializable {
 
 	public String getDescription() {
 		return description;
-	}
-
-	public byte[] getPhoto() {
-		return photo;
 	}
 
 	public int getPrice() {
@@ -95,10 +88,6 @@ public class Product implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
 	}
 
 	public void setPrice(int price) {

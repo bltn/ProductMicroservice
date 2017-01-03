@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +32,7 @@ public class ProductController {
 		try {
 			Product product = productDao.findByProductID(id);
 			Product editedProduct = editProductWithParams(formParams, product);
-			Product savedProduct = productDao.save(editedProduct);
+			Product savedProduct = ((CrudRepository<Product, Integer>)productDao).save(editedProduct);
 			return savedProduct;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -56,7 +57,7 @@ public class ProductController {
 		product.setUserID(id);
 		
 		try {
-			Product savedProduct = productDao.save(product);
+			Product savedProduct = ((CrudRepository<Product, Integer>)productDao).save(product);
 			return savedProduct;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
